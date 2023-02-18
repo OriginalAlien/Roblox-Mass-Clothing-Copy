@@ -18,5 +18,10 @@ Tool for Roblox That Steals &amp; Uploads Clothing, educational purposes only.
 - Required modules, you can run `requirements.bat` to install them  
 
 # Help
-Discord: cereb#0001 for questions  
-Don't expect much from this tool since I'm lazy rn.
+- Discord: cereb#0001 for questions  
+- Don't expect much from this tool since I'm lazy rn  
+
+###### Donate to Support my work
+- BTC: bc1ql2s7zk55r9ekafr39wrwtvnsjxynhlwjzd7qpp
+- LTC: LKoseEiENqnYo9qpgVMWGUoXDQhYaDqz8X
+- ETH: 0xf124225bb66acba45bDC5b89511Cc10044b5214D
