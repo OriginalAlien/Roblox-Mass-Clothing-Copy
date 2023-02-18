@@ -14,7 +14,9 @@ Tool for Roblox That Steals &amp; Uploads Clothing, educational purposes only.
 4. Set `groupId` to the id of the group you're uploading the clothings to  
 
 # Setup
--Python  
--Required modules, you can run `requirements.bat` to install them  
+- [Python](https://python.org/downloads)  
+- Required modules, you can run `requirements.bat` to install them  
 
-Discord: cereb#0001 for questions
+# Help
+Discord: cereb#0001 for questions  
+Don't expect much from this tool since I'm lazy rn.
