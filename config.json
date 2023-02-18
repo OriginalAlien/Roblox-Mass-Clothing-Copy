@@ -1,0 +1,17 @@
+{
+    "auth": {
+        "cookie": ""
+    },
+
+    "optional": {
+        "templateChanger": true,
+        "rateLimitTimeout": 120
+    },
+
+    "clothing": {
+        "customInfo": true,
+        "price": 7,
+        "groupId": 16428135,
+        "description": "Description for clothing"
+    }
+}
