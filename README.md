@@ -1,5 +1,5 @@
 # Roblox-Mass-Clothing-Copy
-Tool for Roblox That Steals &amp; Uploads Clothing, educational purposes only.
+Tool for Roblox That Steals &amp; Uploads Clothing, educational purposes only. **I recommend using VSC (Visual Studio Code) to run this**
 
 # Features
 - Copy Group's Clothing  
