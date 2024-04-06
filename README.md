@@ -1,3 +1,7 @@
+# Update
+I believe this tool no longer works because one of the API needed to work for this tool has been updated,  
+I'll update it soon or later. But if you want to contact me, my new discord is cereb#8577 or cereb8577
+
 # Roblox-Mass-Clothing-Copy
 Tool for Roblox That Steals &amp; Uploads Clothing, educational purposes only.  
 **I recommend using VSC (Visual Studio Code) to run this**  
