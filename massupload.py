@@ -196,17 +196,19 @@ class get:
                 userGroupRequestURL = "https://catalog.roblox.com/v1/search/items/details?Category=3&CreatorType=Group&IncludeNotForSale=false&Limit=30&CreatorTargetId=" + str(userGroupId) + "&cursor=" + userGroupRequestData["nextPageCursor"]
 
         #Displaying Part
-        nameAlignSpaces  = max(len(info[i]["Name"]) for i in info)
-        typeAlignSpaces  = max(len(info[i]["Type"]) for i in info)
-        if not displayOffsale:
-            priceAlignSpaces = max(len(str(info[i]["Price"])) for i in info)
+        if len(info) != 0:
+            nameAlignSpaces  = max(len(info[i]["Name"]) for i in info)
+            typeAlignSpaces  = max(len(info[i]["Type"]) for i in info)
+            if not displayOffsale:
+                priceAlignSpaces = max(len(str(info[i]["Price"])) for i in info)
 
-        for i in info:
-            if displayOffsale:
-                cl(f"{info[i]['Name']}{(nameAlignSpaces-len(info[i]['Name']))*' '} {Fore.WHITE}|{Fore.BLUE} Offsale {Fore.WHITE}|{Fore.BLUE} {info[i]['Type']}{(typeAlignSpaces-len(str(info[i]['Type'])))*' '} {Fore.WHITE}|{Fore.BLUE} https://www.roblox.com/catalog/{i}", "blue", symbol=str(i))
-            else:
-                cl(f"{info[i]['Name']}{(nameAlignSpaces-len(info[i]['Name']))*' '} {Fore.WHITE}|{Fore.BLUE} {info[i]['Price']} R${(priceAlignSpaces-len(str(info[i]['Price'])))*' '} {Fore.WHITE}|{Fore.BLUE} {info[i]['Type']}{(typeAlignSpaces-len(str(info[i]['Type'])))*' '} {Fore.WHITE}|{Fore.BLUE} https://www.roblox.com/catalog/{i}", "blue", symbol=str(i))
-
+            for i in info:
+                if displayOffsale:
+                    cl(f"{info[i]['Name']}{(nameAlignSpaces-len(info[i]['Name']))*' '} {Fore.WHITE}|{Fore.BLUE} Offsale {Fore.WHITE}|{Fore.BLUE} {info[i]['Type']}{(typeAlignSpaces-len(str(info[i]['Type'])))*' '} {Fore.WHITE}|{Fore.BLUE} https://www.roblox.com/catalog/{i}", "blue", symbol=str(i))
+                else:
+                    cl(f"{info[i]['Name']}{(nameAlignSpaces-len(info[i]['Name']))*' '} {Fore.WHITE}|{Fore.BLUE} {info[i]['Price']} R${(priceAlignSpaces-len(str(info[i]['Price'])))*' '} {Fore.WHITE}|{Fore.BLUE} {info[i]['Type']}{(typeAlignSpaces-len(str(info[i]['Type'])))*' '} {Fore.WHITE}|{Fore.BLUE} https://www.roblox.com/catalog/{i}", "blue", symbol=str(i))
+        else:
+            cl("Results Contains No clothes.", "yellow", ">")
 #=========================================
 #                        _            
 #  __ ___ _ __ _  _   __| |__ _ ______
@@ -260,7 +262,6 @@ class copy:
             "Description": copiedClothingInfoData["data"][0]["description"],
             "Price":       copiedClothingInfoData["data"][0]["price"]    
         }
-
         for i in info:
             if customClothingInfo:
                 UploadGroupClothing(
@@ -309,7 +310,7 @@ class copy:
                 if i["assetType"] == 11:    
                     info[i["id"]] = {
                         "Name":        str(i["name"]),
-                        "Type":        "Shirts",
+                        "Type":        11,
                         "Description": i["description"],
                         "Price":       i["price"]
                     }
@@ -317,7 +318,7 @@ class copy:
                 elif i["assetType"] == 12:
                     info[i["id"]] = {
                         "Name":        str(i["name"]),
-                        "Type":        "Pants",
+                        "Type":        12,
                         "Description": i["description"],
                         "Price":       i["price"]
                     }
@@ -443,10 +444,15 @@ class copy:
 def UploadGroupClothing(assetId, type, name, description, price):
     # WRITING ASSET DATA FOR POST REQUEST
     assetData = {
-        "name":            name,
+        "displayName":     name,
         "description":     description,
-        "creatorTargetId": int(userGroupId),
-        "creatorType":     "Group"
+        "assetType":       "Shirt" if str(type) == "11" else "Pants",        
+        "creationContext": {
+            "creator": {
+                "groupId": userGroupId
+            },
+            "expectedPrice": 10
+        }
     }
 
     imgAssetPath = copy.assetImg(assetId, type)
@@ -455,17 +461,10 @@ def UploadGroupClothing(assetId, type, name, description, price):
         file.write(json.dumps(assetData, indent=4))
 
     #UPLOADING SHIRTS/PANTS
-    if str(type).lower() in ["shirts", "shirt", "11"]:
-        groupClothingPostRequest = session.post(
-            "https://itemconfiguration.roblox.com/v1/avatar-assets/11/upload",
-            files   = {name + ".png": open(imgAssetPath, "rb"), "config": open("Storage/clothingPostData/config.json", "rb")}
-        )
-
-    elif str(type).lower() in ["pants", "pant", "12"]:
-        groupClothingPostRequest = session.post(
-            "https://itemconfiguration.roblox.com/v1/avatar-assets/12/upload",
-            files   = {name + ".png": open(imgAssetPath, "rb"), "config": open("Storage/clothingPostData/config.json", "rb")}
-        )
+    groupClothingPostRequest = session.post(
+        "https://apis.roblox.com/assets/user-auth/v1/assets",
+        files=    {"fileContent": open(imgAssetPath, "rb"), "request": ('', open("Storage/clothingPostData/config.json", "rb"))}
+    )
 
     clothingUploadResults = checkRequest(f"CLOTHING-UPLOAD ({name})", "POST", groupClothingPostRequest)
     if not clothingUploadResults["success"] and clothingUploadResults["code"] == 429:
@@ -480,10 +479,20 @@ def UploadGroupClothing(assetId, type, name, description, price):
 
     #RELEASING AND PRICING SHIRT/PANTS
     if groupClothingPostRequest.status_code == 200:
-        uploadedAssetId = groupClothingPostRequest.json()["assetId"]
+        operationId        = groupClothingPostRequest.json()["operationId"]
+        while True:
+            sleep(2.7)
+            userAssetIdRequest = session.get(f"https://apis.roblox.com/assets/user-auth/v1/operations/{operationId}")
+            checkRequest("CLOTHING-ASSET-ID", "GET", userAssetIdRequest)
+            try:
+                uploadedAssetId = userAssetIdRequest.json()["response"]["assetId"]
+                break
+            except:
+                cl(f"Operation ID {operationId} Hasn't Updated Yet, Retrying..", "red", symbol="!")
+
         groupClothingPricePostRequest = session.post(f"https://itemconfiguration.roblox.com/v1/assets/{uploadedAssetId}/release",
             headers = {"Content-Type": "application/json"},
-            data    = json.dumps({"price": str(price), "priceConfiguration": {"priceInRobux": str(price)}, "saleStatus": "OnSale"})
+            data    = json.dumps({"priceConfiguration":{ "priceInRobux": str(price)},"saleStatus": "OnSale","releaseConfiguration": {"saleAvailabilityLocations":[0,1]}})
         )
         checkRequest(f"CLOTHING-PRICING ({uploadedAssetId})", "POST", groupClothingPricePostRequest)
 
