@@ -12,22 +12,25 @@ For `shirtTemplate.png` and `pantTemplate.png`, You Can Replace it With Your Own
 
 # Features
 - Copy Another Group's Clothing  
-- Scrape and Copy Clothings on Catalog  
+- Scrape and Copy Clothings on the Catalog  
 - Template Changer to Avoid Copyright  
 - Project Clothing to Front Page Them  
 
 # Instructions
-1. Go into `config.json` and paste your cookie, you must have the cookie of a account with permissions to upload clothings to your group  
+1. Go into `config.json` and paste your cookie, you must have the cookie of an account with permission to upload clothings to your group  
 2. Set `templateChanger` to true or false if you want to enable/disable it, this helps to avoid copyright  
-3. Set `customInfo` to true if you want to change the clothing's description and price, else it will upload clothings with it's original description and price  
-4. Set `groupId` to the id of the group you're uploading the clothings to  
+3. Set `customInfo` to true if you want to change the clothing's description and price, else it will upload clothings with its original description and price  
+4. Set `groupId` to the id of the group you're uploading the clothings to
+
+Preview: 
+![image](https://github.com/OriginalAlien/Roblox-Mass-Clothing-Copy/assets/80835991/10fe79be-1fd0-4d43-8034-3d304d7e887e)
 
 # Setup
 - [Python](https://python.org/downloads)  
 - Required modules, you can run `requirements.bat` to install them  
 
 # Help
-- Discord: cereb#0001 for questions  
+- Discord: cereb#8577 for questions  
 - Don't expect much from this tool since I'm lazy rn  
 
 ###### Donate to Support my work
