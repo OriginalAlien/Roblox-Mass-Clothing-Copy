@@ -1,6 +1,8 @@
 # Update
 I believe this tool no longer works because one of the API needed to work for this tool has been updated,  
-I'll update it soon or later. But if you want to contact me, my new discord is cereb#8577 or cereb8577
+I'll update it soon or later. But if you want to contact me, my new discord is cereb#8577 or cereb8577  
+New Update: fixed it, sory for delayed ws lazy asl
+
 
 # Roblox-Mass-Clothing-Copy
 Tool for Roblox That Steals &amp; Uploads Clothing, educational purposes only.  
