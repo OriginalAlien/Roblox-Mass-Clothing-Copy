@@ -4,10 +4,8 @@ New Update: Updated it to be compatible with the API, fixed an error of crashing
 
 # Roblox-Mass-Clothing-Copy
 Tool for Roblox That Steals &amp; Uploads Clothing, educational purposes only.  
-**I recommend using VSC (Visual Studio Code) to run this**  
-Edit: Completely forgot to upload "Storage" Folder, Sorry about that lol  
 For `shirtTemplate.png` and `pantTemplate.png`, You Can Replace it With Your Own Custom Clothing Templates if You Want.  
-This does not upload T-Shirts btw, only classic shirts and classic pants  
+This does not upload T-shirts btw, only classic shirts and classic pants  
 
 # Features
 - Copy Another Group's Clothing  
